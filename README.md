@@ -23,21 +23,20 @@ composer require galironfydar/ollama-bundle:dev-main
 
 ## Configuration
 
-Enable the bundle in your `config/bundles.php`:
-
-```php
-return [
-    // ...
-    Galironfydar\OllamaBundle\OllamaBundle::class => ['all' => true],
-];
-```
-
-Configure the bundle in `config/packages/ollama.yaml`:
+The bundle will automatically register itself in your Symfony application. Just add your configuration in `config/packages/ollama.yaml`:
 
 ```yaml
 ollama:
     base_url: 'http://localhost:11434' # Your Ollama instance URL
 ```
+
+All configuration options:
+- `base_url` (default: 'http://localhost:11434'): The base URL of your Ollama instance
+
+The bundle will automatically:
+- Register the OllamaService as a service in your container
+- Configure the HTTP client for API communication
+- Set up all necessary parameters
 
 ## Usage
 

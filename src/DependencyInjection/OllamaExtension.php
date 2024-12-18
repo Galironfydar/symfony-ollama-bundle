@@ -2,7 +2,6 @@
 
 namespace Galironfydar\OllamaBundle\DependencyInjection;
 
-use Galironfydar\OllamaBundle\Service\OllamaService;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -15,9 +14,14 @@ class OllamaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->register('ollama.service', OllamaService::class)
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setArgument('$baseUrl', $config['base_url']);
+        // Load the services.yaml file
+        $loader = new YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.yaml');
+
+        // Set the base_url parameter
+        $container->setParameter('ollama.base_url', $config['base_url']);
     }
 } 

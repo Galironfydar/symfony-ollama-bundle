@@ -6,8 +6,5 @@ services:
 
     Galironfydar\OllamaBundle\Service\OllamaService:
         arguments:
+            $httpClient: '@http_client'
             $baseUrl: '%ollama.base_url%'
-
-    Galironfydar\OllamaBundle\Controller\:
-        resource: '../../Controller'
-        tags: ['controller.service_arguments']
