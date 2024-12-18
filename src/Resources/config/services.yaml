@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Galironfydar\OllamaBundle\Service\OllamaService:
+        arguments:
+            $baseUrl: '%ollama.base_url%'
+
+    Galironfydar\OllamaBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']

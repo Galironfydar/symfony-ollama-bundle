@@ -1,0 +1,2 @@
+ollama:
+    base_url: 'http://localhost:11434' 
