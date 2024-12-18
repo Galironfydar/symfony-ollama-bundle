@@ -1,6 +1,6 @@
 <?php
 
-namespace Galironfydar\OllamaBundle\Tests\Service;
+namespace Galironfydar\OllamaBundle\Tests\Unit\Service;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
