@@ -17,12 +17,16 @@ class OllamaService
         $this->baseUrl = rtrim($baseUrl, '/');
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>|ResponseStreamInterface
+     */
     public function completion(
         string $model,
         string $prompt,
         array $options = [],
         bool $stream = false
-    ): ResponseStreamInterface|array {
+    ): array|ResponseStreamInterface {
         $payload = array_merge([
             'model' => $model,
             'prompt' => $prompt,
@@ -41,12 +45,17 @@ class OllamaService
         return $stream ? $this->httpClient->stream($response) : $response->toArray();
     }
 
+    /**
+     * @param array<int, array{role: string, content: string}> $messages
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>|ResponseStreamInterface
+     */
     public function chat(
         string $model,
         array $messages,
         array $options = [],
         bool $stream = false
-    ): ResponseStreamInterface|array {
+    ): array|ResponseStreamInterface {
         $payload = array_merge([
             'model' => $model,
             'messages' => $messages,
@@ -65,17 +74,24 @@ class OllamaService
         return $stream ? $this->httpClient->stream($response) : $response->toArray();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function listModels(): array
     {
         $response = $this->httpClient->request('GET', "{$this->baseUrl}/api/tags");
         return $response->toArray();
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>|ResponseStreamInterface
+     */
     public function pullModel(
         string $model,
         array $options = [],
         bool $stream = false
-    ): ResponseStreamInterface|array {
+    ): array|ResponseStreamInterface {
         $payload = array_merge([
             'name' => $model,
             'stream' => $stream,
@@ -89,6 +105,9 @@ class OllamaService
         return $stream ? $this->httpClient->stream($response) : $response->toArray();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function deleteModel(string $model): array
     {
         $response = $this->httpClient->request('DELETE', "{$this->baseUrl}/api/delete", [
@@ -100,6 +119,9 @@ class OllamaService
         return $response->toArray();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function showModelInfo(string $model): array
     {
         $response = $this->httpClient->request('POST', "{$this->baseUrl}/api/show", [
@@ -111,6 +133,9 @@ class OllamaService
         return $response->toArray();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function copyModel(string $source, string $destination): array
     {
         $response = $this->httpClient->request('POST', "{$this->baseUrl}/api/copy", [

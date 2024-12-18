@@ -15,14 +15,7 @@ class OllamaServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->httpClient = new MockHttpClient(function ($method, $url, $options) {
-            $this->lastRequest = [
-                'method' => $method,
-                'url' => $url,
-                'options' => $options
-            ];
-            return new MockResponse('[]');
-        });
+        $this->httpClient = new MockHttpClient();
         $this->ollamaService = new OllamaService($this->httpClient, self::BASE_URL);
     }
 
@@ -41,7 +34,7 @@ class OllamaServiceTest extends TestCase
             self::assertSame('Tell me a story', $requestContent['prompt']);
             self::assertFalse($requestContent['stream']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -92,7 +85,7 @@ class OllamaServiceTest extends TestCase
             self::assertSame($messages, $requestContent['messages']);
             self::assertFalse($requestContent['stream']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -111,7 +104,7 @@ class OllamaServiceTest extends TestCase
             self::assertSame('GET', $method);
             self::assertSame(self::BASE_URL . '/api/tags', $url);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -135,7 +128,7 @@ class OllamaServiceTest extends TestCase
             self::assertSame('llama2', $requestContent['name']);
             self::assertFalse($requestContent['stream']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -158,7 +151,7 @@ class OllamaServiceTest extends TestCase
             $requestContent = json_decode($options['body'], true);
             self::assertSame('llama2', $requestContent['name']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -181,7 +174,7 @@ class OllamaServiceTest extends TestCase
             $requestContent = json_decode($options['body'], true);
             self::assertSame('llama2', $requestContent['name']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
@@ -206,7 +199,7 @@ class OllamaServiceTest extends TestCase
             self::assertSame('llama2', $requestContent['source']);
             self::assertSame('my-llama2', $requestContent['destination']);
 
-            return new MockResponse(json_encode($expectedResponse), [
+            return new MockResponse((string) json_encode($expectedResponse), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: application/json'],
             ]);
