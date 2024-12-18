@@ -1,5 +1,7 @@
 # OllamaBundle
 
+[![Tests](https://github.com/Galironfydar/symfony-ollama-bundle/actions/workflows/tests.yml/badge.svg)](https://github.com/Galironfydar/symfony-ollama-bundle/actions/workflows/tests.yml)
+
 A Symfony bundle for integrating Ollama AI models into your application.
 
 ## Installation
