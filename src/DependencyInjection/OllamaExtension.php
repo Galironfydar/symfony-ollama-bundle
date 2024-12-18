@@ -21,7 +21,14 @@ class OllamaExtension extends Extension
         );
         $loader->load('services.yaml');
 
-        // Set the base_url parameter
-        $container->setParameter('ollama.base_url', $config['base_url']);
+        // Set all configuration parameters with ollama prefix
+        foreach ($config as $key => $value) {
+            $container->setParameter('ollama.' . $key, $value);
+        }
+    }
+
+    public function getAlias(): string
+    {
+        return 'ollama';
     }
 } 
