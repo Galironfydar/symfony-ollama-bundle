@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Galironfydar\OllamaBundle\Service\OllamaService;
+use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 
 class OllamaServiceTest extends TestCase
 {
@@ -49,8 +50,9 @@ class OllamaServiceTest extends TestCase
     {
         $model = 'llama2';
         $prompt = 'Tell me a story';
+        $expectedChunks = ['chunk1', 'chunk2'];
 
-        $this->httpClient = new MockHttpClient(function ($method, $url, $options) {
+        $this->httpClient = new MockHttpClient(function ($method, $url, $options) use ($expectedChunks) {
             self::assertSame('POST', $method);
             self::assertSame(self::BASE_URL . '/api/generate', $url);
             
@@ -59,7 +61,9 @@ class OllamaServiceTest extends TestCase
             self::assertSame('Tell me a story', $requestContent['prompt']);
             self::assertTrue($requestContent['stream']);
 
-            return new MockResponse('chunk1chunk2', [
+            return new MockResponse(implode('', array_map(function ($chunk) {
+                return json_encode(['response' => $chunk]) . "\n";
+            }, $expectedChunks)), [
                 'http_code' => 200,
                 'response_headers' => ['Content-Type: text/event-stream'],
             ]);
@@ -67,7 +71,8 @@ class OllamaServiceTest extends TestCase
 
         $this->ollamaService = new OllamaService($this->httpClient, self::BASE_URL);
         $result = $this->ollamaService->completion($model, $prompt, [], true);
-        self::assertIsIterable($result);
+        
+        self::assertInstanceOf(ResponseStreamInterface::class, $result);
     }
 
     public function testChat(): void
