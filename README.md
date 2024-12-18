@@ -10,7 +10,7 @@ A Symfony bundle for integrating Ollama AI models into your application.
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Galironfydar/ollama-bundle"
+            "url": "https://github.com/Galironfydar/symfony-ollama-bundle.git"
         }
     ]
 }
