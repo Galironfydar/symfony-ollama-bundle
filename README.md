@@ -41,7 +41,7 @@ ollama:
 
 ## Usage
 
-### Using the OllamaService
+The bundle provides the `OllamaService` which you can use to interact with your Ollama instance:
 
 ```php
 use Galironfydar\OllamaBundle\Service\OllamaService;
@@ -65,21 +65,54 @@ class YourService
 
         // List available models
         $models = $this->ollamaService->listModels();
+
+        // Pull a model
+        $response = $this->ollamaService->pullModel('llama2');
+
+        // Delete a model
+        $response = $this->ollamaService->deleteModel('llama2');
+
+        // Get model info
+        $response = $this->ollamaService->showModelInfo('llama2');
+
+        // Copy a model
+        $response = $this->ollamaService->copyModel('llama2', 'my-llama2');
     }
 }
 ```
 
-### Using the Controller Endpoints
+### Advanced Usage
 
-The bundle provides several REST endpoints:
+Each method supports additional options and streaming responses:
 
-- `GET /api/ollama/completion` - Generate text completion
-- `GET /api/ollama/chat` - Chat with the model
-- `GET /api/ollama/models` - List available models
-- `POST /api/ollama/models/copy` - Copy a model
-- `POST /api/ollama/models/{model}/pull` - Pull a model
-- `GET /api/ollama/models/{model}` - Get model info
-- `DELETE /api/ollama/models/{model}` - Delete a model
+```php
+// Completion with options and streaming
+$response = $this->ollamaService->completion(
+    'llama2',
+    'Tell me a story',
+    [
+        'options' => [
+            'temperature' => 0.7,
+            'top_p' => 0.9,
+            'top_k' => 40,
+        ]
+    ],
+    true // Enable streaming
+);
+
+// Process streaming response
+foreach ($response as $chunk) {
+    if ($chunk instanceof ChunkInterface) {
+        echo $chunk->getContent();
+    }
+}
+```
+
+## Examples
+
+Check out the `examples` directory for implementation examples:
+
+- `examples/Controller/OllamaController.php`: A complete REST API implementation showing how to use the service with streaming responses and proper error handling.
 
 ## License
 
