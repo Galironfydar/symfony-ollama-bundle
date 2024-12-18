@@ -1,10 +1,13 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
 /vendor/
 /composer.lock
 .phpunit.result.cache
-.php-cs-fixer.cache
+###< symfony/framework-bundle ###
+
+###> IDE files ###
 .idea/
 .vscode/
-*.cache
-var/
-.env.local
-.env.*.local
+###< IDE files ###

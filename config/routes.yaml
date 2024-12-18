@@ -1,5 +1,0 @@
-ollama:
-    resource:
-        path: ../src/Bundle/Ollama/Controller/
-        namespace: Galironfydar\OllamaBundle\Controller
-    type: attribute
