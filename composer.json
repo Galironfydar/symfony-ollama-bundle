@@ -34,13 +34,5 @@
       "symfony/flex": true,
       "symfony/runtime": true
     }
-  },
-  "extra": {
-    "symfony": {
-      "endpoint": [
-        "https://raw.githubusercontent.com/Galironfydar/symfony-ollama-bundle/index.json",
-        "flex://defaults"
-      ]
-    }
   }
 }
