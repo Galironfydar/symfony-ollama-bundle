@@ -1,7 +1,17 @@
 {
     "recipes": {
         "galironfydar/ollama-bundle": [
-            "1.0"
+            {
+                "version": "1.0",
+                "ref": "main"
+            }
         ]
+    },
+    "branch": "main",
+    "is_contrib": true,
+    "_links": {
+        "repository": "github.com/galironfydar/recipes",
+        "origin_template": "{package}:{version}@github.com/galironfydar/recipes:main",
+        "recipe_template": "https://raw.githubusercontent.com/galironfydar/recipes/main/{package_dotted}/{version}"
     }
 } 
